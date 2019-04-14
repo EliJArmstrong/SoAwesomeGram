@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        Parse.initialize(
+            with: ParseClientConfiguration(block: { (configuration: ParseMutableClientConfiguration) -> Void in
+                configuration.applicationId = "NotSoAwesomeGarmClone"
+                configuration.server = "https://whispering-ocean-50784.herokuapp.com/parse"
+            })
+        )
+        
+        if(PFUser.current() != nil){
+            let main = UIStoryboard(name: "Main", bundle: nil)
+            
+            let TabBC = main.instantiateViewController(withIdentifier: "TabBC")
+            
+            window?.rootViewController = TabBC
+        }
+        
         return true
     }
 
